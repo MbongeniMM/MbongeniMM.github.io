@@ -169,19 +169,23 @@
 				<!-- Three -->
 					<section id="contact">
 						<h2>Get In Touch</h2>
-						<p>Accumsan pellentesque commodo blandit enim arcu non at amet id arcu magna. Accumsan orci faucibus id eu lorem semper nunc nisi lorem vulputate lorem neque lorem ipsum dolor.</p>
+						<p>Thank you for taking the time to explore my portfolio! Whether you have a project in mind, a question, or just want to say hello, 
+							I'd love to hear from you. Feel free to reach out using the contact form below or connect with me on social media. 
+							I'm always excited to discuss new opportunities, collaborations, or simply chat about our shared interests.
+						</p>
 						<div class="row">
 							<div class="col-8 col-12-small">
-								<form method="post" action="#">
+								<form id="contact-form" method="post" action="https://salty-cordelie-mbongeni.koyeb.app/contact">
 									<div class="row gtr-uniform gtr-50">
 										<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Name" /></div>
 										<div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" /></div>
-										<div class="col-12"><textarea name="message" id="message" placeholder="Message" rows="4"></textarea></div>
+										<div class="col-12"><textarea name="message" id="message" placeholder="Message" rows="4" style="margin-bottom: 20px;"></textarea></div>
 									</div>
+									<ul class="actions">
+										<li><button type="button" onclick="submitForm()" style="padding: 10px 20px; border-radius: 10px; font-size: 16px; border: none; background-color: rgb(214, 211, 211); cursor: pointer;" onmouseover="this.style.backgroundColor='lightgreen'" onmouseleave="this.style.backgroundColor='rgb(214, 211, 211)'" onfocus="this.style.backgroundColor='lightgreen'" onblur="this.style.backgroundColor='transparent'">Send Message</button></li>
+									</ul>
 								</form>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
+								
 							</div>
 							<div class="col-4 col-12-small">
 								<ul class="labeled-icons">
@@ -200,6 +204,7 @@
 									</li>
 								</ul>
 							</div>
+							<div id="response-message"></div>
 						</div>
 					</section>
 
@@ -545,6 +550,36 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
+			<script>
+				function submitForm() {
+					// Get form data
+					const formData = new FormData(document.getElementById('contact-form'));
+			
+					// Send form data asynchronously using fetch API
+					fetch('https://salty-cordelie-mbongeni.koyeb.app/contact', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded' // Specify form data
+						},
+						body: new URLSearchParams(formData) // Convert form data to URLSearchParams
+					})
+					.then(response => {
+						if (response.ok) {
+							return response.text(); // If the response is successful, return the text
+						} else {
+							throw new Error('Network response was not ok.');
+						}
+					})
+					.then(data => {
+						// Display success message and clear form
+						document.getElementById('response-message').innerHTML = 'Message sent successfully.';
+						document.getElementById('contact-form').reset(); // Clear form
+					})
+					.catch(error => {
+						console.error('There was a problem with your fetch operation:', error);
+					});
+				}
+			</script>
+			
 	</body>
 </html>
